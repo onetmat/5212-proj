@@ -1,0 +1,6 @@
+All JSON samples examined have a `dailysummary' child of `history'.
+`history' is the second item; after the `response' header.
+Every history item has a complete list of weather readings for that day.
+There will be an immense amount of data d/l'd
+
++ Can the base query be amended to only retrieve daily summaries?
