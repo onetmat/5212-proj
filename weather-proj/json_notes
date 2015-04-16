@@ -3,4 +3,12 @@ All JSON samples examined have a `dailysummary' child of `history'.
 Every history item has a complete list of weather readings for that day.
 There will be an immense amount of data d/l'd
 
+Does not appear to be any indication of which weather station gets queried
+within the JSON.
+We will have to be intelligent about these queries.
+
 + Can the base query be amended to only retrieve daily summaries?
+   Appears answer is no.
+
++ Compound queries?
+   No.

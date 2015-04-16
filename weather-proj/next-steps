@@ -1,0 +1,26 @@
+Regarding input data processing:
+0) Need a script that will determine which weather station index
+is being examined (can be as easy as int -> string).
+1) Need a script that can isolate and remove the dailysummary portion
+of output JSON.
+   * See json_notes
+2) Script must store isolated dailysummary into { int -> string } index
+of weather stations.
+   a) Sorted by date
+   b) Not necessary for sort index to be date.
+      *) Dates will be the same for each weather station
+      *) {date -> int} mapping?
+3) Need method of iterating over all dates in the year.
+
+One data is sorted into appropriate mappings, need to categorize the
+input data.
+Think about proper mappings.
+
+What is the best method to get weather station data?
+
+Which weather stations to use?
+   Note that we can just start downloading and processing data from any
+   weather station that provides it and select later.
+   Any processed weather station data can be stored in a database for later
+   use or non-use.
+   Storing dailysummary data may get big but could be compressed.
