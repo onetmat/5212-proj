@@ -1,0 +1,48 @@
+\documentclass{article}
+\pagestyle{empty}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\begin{document}
+
+\flushright
+Mathew Anderson \\
+Sys Eng 5212 Intro to Neural Networks and Applications, Spring 2015 \\ HW 5
+
+\flushleft
+
+
+1. See anderson\_hw5\_p1.m, msa\_tight\_fist.m, and msa\_svm\_*.m for my SVM implementation.
+I used the built-in MATLAB function QUADPROG to solve for the
+Lagrangian parameters of the dual for non-linear SVMs.
+My SVM implementation uses a Polynomial learning machine with p = 3 as its
+kernel function.
+Increasing the value of C appears to increase the mis-classification percentage.
+I believe this is due to the tight boundaries of the three cocentric circles;
+which are not conducive to generating a large margin of error.
+Overall, my SVM implementation struggles with the smallest of the circles inthe fist.
+This keeps the percent misclassifed in the range of 25-40\%.
+\\
+For each run of my script two scripts are produced:
+\begin{enumerate}
+\item The training set with known outputs and support vector locations
+overlayed
+\item The testing set with SVM classified labels and support vector
+locations overlayed
+\end{enumerate}
+
+2. See Anderson\_hw5\_p2.m, msa\_img\_compress.m, msa\_img\_decompress.m,
+msa\_hw5\_hw4.m for my solution.
+Utilizing PCA to reduce the dimensionality of the input images allows
+for fewer hidden neurons to more accurately reproduce the input image.
+My script generates outputs for the 95\% and 99\% variance retention for
+both images.
+It appears that using a hidden neuron count greater than 6 but less than 16
+strikes a good compromise.
+Around 12 hidden neurons it becomes very difficult to distinguish between
+the compressed image and the original (reduced dimensionality).
+Uncommenting the appropriate lines from Anderson\_hw5\_p2.m will also
+produce the control tiger and fruits images.
+
+
+\end{document}
