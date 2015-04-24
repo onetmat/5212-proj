@@ -1,0 +1,6 @@
+LVQ seems like an easy problem. Laid out well in notes.
+
+http://jsalatas.ictpro.gr/implementation-of-competitive-learning-networks-for-weka/
+
+I like the Voronoi separation:
+( x - \hat{x})^T * (x - \hat{x})
