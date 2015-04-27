@@ -10,8 +10,44 @@ Mathew Anderson \\
 Sys Eng 5212 Intro to Neural Networks and Applications, Spring 2015 \\ HW 6
 
 \flushleft
-1. For this homework, I intend to use weather data for all cities
-providing data to Weather Underground in IA to 
+1. For this homework, I will use weather data for five cities in Iowa
+and train a neural network using backpropagation.
+The date range of my weather data spans from April 1985 to December 1999.
+My output data will be historical monthly corn prices as measured in
+US\$ according to http://www.indexmundi.com/commodities/?commodity=corn\&months=360.
+The output quantization will be the delta of the monthly price normalized
+to $[-0.8, 0.8]$.
+The five cities selected as ``weather stations'' are:
+\begin{itemize}
+\item Algona
+\item Ames
+\item Atlantic
+\item Audubon
+\item Boone
+\end{itemize}
+These cities were chosen primarily because of data availability and
+their approximate geographic locations.
+My project will have additional cities and a map showing locations of each.
+
+For each day in each month, the daily summary of weather data, as provided
+by the Weather Underground (www.wunderground.com), classified the average
+pressure, temperature, and total rainfall according to the following
+``buckets'':
+\begin{itemize}
+\item Pressure (in inHg): $[29.4, 29.5, 29.6, 29.7, 29.8, 29.9, 30, 30.1,
+30.2, 30.3, 30.4, 30.5]$
+\item Temperature (in $^{\circ}F$): $[0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110]$
+\item Precipitation (in inches): $[0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2,
+2.25, 2.5, 2.75, 3]$
+\end{itemize}
+Note that any values in excess of the highest bucket or less than the value
+of the lowest bucket will result in a quantization of 0 or 12.
+No scientific rationale for these buckets exist, they were chosen to match
+http://omahanebraskawx.com/wxbarodetail.php.\\
+
+The network itself consists of 5 hidden neurons with one output neuron.
+Each neuron will have 461 inputs, representing 31 samples of 3 data features
+for each of the 5 cities.
 
 2. See Anderson\_hw6\_p2.m, hw6\_train\_gen.m, and msa\_voronoi\_quant.m
 for my solution.
