@@ -24,7 +24,8 @@ while read -u4 city ; do
    mkdir $1/data/$city
    while read -u5 date ; do
       querystr="history_$date/q/$1/$city.json"
-      echo history_$date/q/$1/$city.json >> $1/queries/$city
-      curl http://api.wunderground.com/api/5b0d8023c31797a8/$querystr > $1/data/$city/$date.json
+      #echo history_$date/q/$1/$city.json >> $1/queries/$city
+      echo "curl http://api.wunderground.com/api/5b0d8023c31797a8/$querystr > $date.json" >> $1/data/$city/get_data.sh
+      chmod u+x $1/data/$city/get_data.sh
    done
 done
