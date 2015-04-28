@@ -45,9 +45,19 @@ of the lowest bucket will result in a quantization of 0 or 12.
 No scientific rationale for these buckets exist, they were chosen to match
 http://omahanebraskawx.com/wxbarodetail.php.\\
 
-The network itself consists of 5 hidden neurons with one output neuron.
-Each neuron will have 461 inputs, representing 31 samples of 3 data features
+The network itself consists of 3 hidden neurons with one output neuron.
+Each neuron will have 420 inputs, representing 28 samples of 3 data features
 for each of the 5 cities.
+28 samples are used to represent a month for simplicity.
+
+Because the weather data and monthly pricing data spans 177 months,
+the first 123 input samples will serve as training data and the final
+54 samples will serve as testing data.
+The input data will be shuffled before the backpropagation algorithm
+is allowed to execute.
+
+See Anderson\_hw6\_p1.m for the final implementation of my network.
+MSE plots, etc are produce upon running the script.
 
 2. See Anderson\_hw6\_p2.m, hw6\_train\_gen.m, and msa\_voronoi\_quant.m
 for my solution.
