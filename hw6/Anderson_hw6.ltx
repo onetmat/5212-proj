@@ -20,12 +20,12 @@ Mathew Anderson \\
 Sys Eng 5212 Intro to Neural Networks and Applications, Spring 2015 \\ HW 6
 
 \flushleft
-1. For this homework, I will use weather data for five cities in Iowa
-and train a neural network using backpropagation.
+1. For this homework, I used weather data for five cities in Iowa
+to train a neural network using backpropagation.
 The date range of my weather data spans from April 1985 to December 1999.
-My output data will be historical monthly corn prices as measured in
-US\$ according to http://www.indexmundi.com/commodities/?commodity=corn\&months=360.
-The output quantization will be the delta of the monthly price normalized
+My output data is historical monthly corn prices as measured in
+US\$ per Bushel according to http://www.indexmundi.com/commodities/?commodity=corn\&months=360.
+The output quantization is the delta of the monthly price normalized
 to $[-0.8, 0.8]$.
 The five cities selected as ``weather stations'' are:
 \begin{itemize}
@@ -37,11 +37,14 @@ The five cities selected as ``weather stations'' are:
 \end{itemize}
 These cities were chosen primarily because of data availability and
 their approximate geographic locations.
-My project will have additional cities and a map showing locations of each.
+Cities in the state of Iowa were selected because Iowa produces more corn
+than any other state in the United States and the United States is the leading
+corn producing country in the world.
 
 For each day in each month, the daily summary of weather data, as provided
-by the Weather Underground (www.wunderground.com), classified the average
-pressure, temperature, and total rainfall according to the following
+by the Weather Underground (www.wunderground.com), gets specific features
+(average barometric pressure, average daily temperature, total precipication)
+classified according to the following
 ``buckets'':
 \begin{itemize}
 \item Pressure (in inHg): $[29.4, 29.5, 29.6, 29.7, 29.8, 29.9, 30, 30.1,
@@ -51,23 +54,60 @@ pressure, temperature, and total rainfall according to the following
 2.25, 2.5, 2.75, 3]$
 \end{itemize}
 Note that any values in excess of the highest bucket or less than the value
-of the lowest bucket will result in a quantization of 0 or 12.
+of the lowest bucket will result in a quantization of 12 or 0.
 No scientific rationale for these buckets exist, they were chosen to match
 http://omahanebraskawx.com/wxbarodetail.php.\\
 
-The network itself consists of 3 hidden neurons with one output neuron.
+\vspace{6pt}
+The network itself consists of 5 hidden neurons with one output neuron.
 Each neuron will have 420 inputs, representing 28 samples of 3 data features
 for each of the 5 cities.
 28 samples are used to represent a month for simplicity.
 
+\vspace{6pt}
 Because the weather data and monthly pricing data spans 177 months,
 the first 123 input samples will serve as training data and the final
 54 samples will serve as testing data.
 The input data will be shuffled before the backpropagation algorithm
 is allowed to execute.
+\vspace{6pt}
 
 See Anderson\_hw6\_p1.m for the final implementation of my network.
-MSE plots, etc are produce upon running the script.
+An MSE plot is produced upon running the script.
+
+\vspace{6pt}
+The backpropagation algorithm uses Nguyen-Widrow weight initialization and
+fits reasonably well ``out of the box'' using a mommentum paramter of
+0.01.
+I noticed that overfitting appears to occur rapidly (before 100 iterations),
+so I tuned the cutoff for the growth of the MSE to 0.0001.
+The number of hidden neurons was determined experimentally from the following
+set $[3, 5, 10]$.
+Five most consistently produced MSE values between 0.02 and 0.03.
+
+\vspace{6pt}
+Further refinements would have to originate in the data.
+Unfortunately, Weather Underground doesn't have good pressure or precipitation
+readings before the mid 1990s for most cities in Iowa.
+Other websites contain more complete weather data but without the historical
+depth of Weather Underground.
+As an added bonus, most non-Weather Underground websites are free.
+It's possible that the ``holes'' in the barometric pressure and
+precipitation data are the cause of my relatively high MSE.
+I consider that a possibility because, for example, without adequate precipitation
+data it will not be possible to detect floods/droughts.
+
+\vspace{6pt}
+Finally, there are many varieties of corn. While the United States is the leading corn
+producing nation and Iowa produces more corn than any other state, both Minnesota
+and Illinois produce a large amount of corn per year as well and I expect that weather
+conditions in the neighboring states also affect the price of corn per month.
+The weather is not an independent thing and the ``Corn Belt'' in the United States
+consists primarily of Iowa, Minnesota, South Dakota, and Illinois.
+If it is possible to maintain the number of cities classified as ``weather stations'' while
+expanding the geographic coverage, it may certainly improve the relationship between weather
+observations and change in corn as measured in US\$ per bushel.
+\vspace{6pt}
 
 2. See Anderson\_hw6\_p2.m, hw6\_train\_gen.m, and msa\_voronoi\_quant.m
 for my solution.

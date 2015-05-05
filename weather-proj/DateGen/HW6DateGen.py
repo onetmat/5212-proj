@@ -10,9 +10,16 @@ d2 = date(2000, 1, 1)
 
 delta = d2-d1
 
+baseDir = '/home/msa/projects/cs5212/weather-proj/IA/data/'
+
+cities = ['Algona', 'Ames', 'Atlantic', 'Audubon', 'Boone']
+
 # Dates are printed YYYY-MM-DD format
 # Which is almost perfect for WUnderground API
 for i in range(delta.days):
    newDay = d1+td(days=i)
    if newDay.day < 29:
-      print(newDay)
+      for city in cities:
+         yearMonth = str(newDay.year) + str(newDay.month)
+         print("python ClassifyDay.py " + baseDir + city + '/' + \
+            str(newDay) + ".json >> " + yearMonth)

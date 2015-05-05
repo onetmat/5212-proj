@@ -10,7 +10,7 @@ from ClassifyBuckets import *
 # classification to the console.
 
 if __name__ == "__main__":
-   print ("Attempting to process: " + str(sys.argv[1]))
+   #print ("Attempting to process: " + str(sys.argv[1]))
    try:
       jsonFile = open(str(sys.argv[1]), 'r')
       jsonRep = json.load(jsonFile)
@@ -34,8 +34,10 @@ if __name__ == "__main__":
       temp_bucket = ClassifyValue(meantempi, temp_buckets)
       press_bucket = ClassifyValue(meanpressi, press_buckets)
       precip_bucket = ClassifyValue(precipi, precip_buckets)
-      print (str(temp_bucket)+","+str(press_bucket)+","+str(precip_bucket))
+      print (str(temp_bucket)+","+str(press_bucket)+","+str(precip_bucket)
+         +',',end="")
    
    except Exception as e:
-      print ("And it failed...")
-      print (e)
+      print("0,0,0,",end="")
+      #print (str(sys.argv[1]) + " Fails with:")
+      #print (e)
