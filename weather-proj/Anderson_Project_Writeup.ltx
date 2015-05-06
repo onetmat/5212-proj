@@ -5,6 +5,7 @@
 \pagestyle{empty}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{listings}
 
 % Create a command that makes a nice horizontal line across
 % the text section of a page.
@@ -245,6 +246,30 @@ of sub-optimal input data.
 This output data corresponds to the dataset used for homework 6.
 The second subset covers January $1^{st}$, 2004 to December $31^{st}$, 2014 and is
 considered the output for the optimal input data.
+
+\pagebreak
+\appendix
+\section{Selected Source Code Segments}
+\begin{figure}[h]
+\begin{lstlisting}[frame=single]
+curl http://api.wunderground.com/
+   api/5b0d8023c31797a8/history_20060405/
+      q/CA/San_Francisco.json
+\end{lstlisting}
+\caption{Sample Weather Data Request}
+\end{figure}
+
+\section{Contents of Submission}
+The following table lists all files submitted in the submission file
+along with a brief overview of their contents:
+\begin{table}[h]
+\begin{tabular}{|c|c|}
+\hline
+Name of File & Contents \\ \hline
+\end{tabular}
+\caption{Files and their Contents}
+\end{table}
+
 
 \pagebreak
 \begin{thebibliography}{99}
