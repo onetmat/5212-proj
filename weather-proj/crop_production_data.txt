@@ -1,4 +1,0 @@
-http://data.fao.org/dataset-data-filter?entryId=29920434-c74e-4ea2-beed-01b832e60609&tab=data
-
-
-http://www1.agric.gov.ab.ca/$department/deptdocs.nsf/all/sis5219
