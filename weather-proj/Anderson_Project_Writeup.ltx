@@ -1,0 +1,96 @@
+%% Used to generate final writeup for CS5215, Spring 2015.
+%% By Mathew Anderson
+
+\documentclass{article}
+\pagestyle{empty}
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+
+\begin{document}
+
+%% Title page needs Name of Project,
+%% Author name
+%% class, semester
+%% Date of submittal
+
+Hi
+
+% How to make nice horizontal line:
+\rule{\textwidth}{1pt}
+
+there
+
+% Good reference for when structure needs to arrive.
+% http://en.wikibooks.org/wiki/LaTeX/Document_Structure
+
+% Biblio with rough summaries:
+% ``Trading Corn Futures'', Website, www.tradertech.com/trading/corn.
+% Last accessed on 5 May, 2015.
+% Stuff:
+% Brief overview of corn futures trading; why would anyone care? Basic
+% terminology, hints of the weather affecting yield.
+% ``...especially subject to yield losses from hot, dry conidtions
+% during [April-May] ...''
+% Emphasizes relation between yield and price.
+
+% http://www.ijser.org/researchpaper%5CRegression-and-Neural-Networks-Models-for-Prediction-of-Crop-Production.pdf
+% Another literature review highlighting the success of using ANNs
+% for prediction of crop yield using weather as a predictor.
+
+% http://www.ssca.org.in/2011/4Amrender.pdf
+% Statistics and Applications
+%Volume 9, Nos. 1&2, 2011 (New Series), pp. 55-69
+%Weather based forecasting model for crops yield using neural network
+%approach
+%Ratna Raj Laxmi1
+%and Amrender Kumar2
+% Used various BP algorithms to produce NN predictor of crop yields
+% for Rice, Wheat, and Sugarcane using a variety of weather data.
+% Able to achieve single digit Mean Absolute Percent Error.
+% Weather data covered entire ``zones''.
+% Authors assume technological factors linearly increase yield
+% over time.
+% Used Min/Max temp, rainfall, morning relative humidity for 
+% input variables. Sent through a farily rigorous preprocessing system. 
+% Used NN models with one and two hidden layers, convoluted with 4, 5, and
+% 6 hidden neurons per hidden layer.
+% Hyperbolic tangent used as hidden neuron activation function.
+% Assumed tanh for output layer
+
+% PREDICTION OF CROP YIELDS ACROSS FOUR CLIMATE ZONES IN GERMANY:
+% AN ARTIFICIAL NEURAL NETWORK APPROACH
+%Working Paper FNU-34
+%Thomas Heinzowa,*
+ %and Richard S.J. Tola,b,c 
+% 2003, see http://econpapers.repec.org/paper/sgcwpaper/34.htm
+% for more citation info.
+% Input variables:
+% Daily mean and max temp.
+% Daily mean dewpoint
+% Precipitation (assumed daily)
+% Four layer backprop network, used logistic activation function.
+% (hyperbolic tangent)
+% Used ``identity'' activation function for output layer.
+% See table two for overview of architecture.
+
+% Prediction of Tangerine Yield Using Artificial Neural Network (ANN)
+%Pichaya Boonprasom1
+ %and Gumpanart Bumroongitt
+
+% http://www.thaiscience.info/journals/Article/Prediction%20of%20tangerine%20yield%20using%20artificial%20neural%20network%20%28ann%29.pdf
+
+%% All sources tie weather to crop yield, very strong basis for success
+% w/r/t my project.
+% It appears I go out on a limb using monthly prices as output values.
+% Tang. Yield goes as far as trying to use quantized weather information
+% (avg monthly rainfall, avg monthly temp, avg monthly relative humidity)
+% of the primary tangerine producing regions in China to predict end of
+% year crop yield.
+% Multiple Neural Network configurations are used to determine ideal
+% input factors and hidden neuron count.
+% The paper seems to focus on determining ideal neuron count and input
+% feature.
+% No direct reference to activation functions was found.
+
+\end{document}
