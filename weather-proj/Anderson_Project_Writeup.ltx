@@ -21,30 +21,31 @@ Hi
 
 there
 
-% Good reference for when structure needs to arrive.
-% http://en.wikibooks.org/wiki/LaTeX/Document_Structure
+\begin{thebibliography}{99}
 
-% Biblio with rough summaries:
-% ``Trading Corn Futures'', Website, www.tradertech.com/trading/corn.
-% Last accessed on 5 May, 2015.
-% Stuff:
 % Brief overview of corn futures trading; why would anyone care? Basic
 % terminology, hints of the weather affecting yield.
 % ``...especially subject to yield losses from hot, dry conidtions
 % during [April-May] ...''
 % Emphasizes relation between yield and price.
+\bibitem{tradecorn}
+   Market Technologies,
+   \emph{``Trading Corn Futures''}.
+   Online Article,
+   www.tradertech.com/trading/corn.
+   Last Accessed on 5 May, 2015.
 
 % http://www.ijser.org/researchpaper%5CRegression-and-Neural-Networks-Models-for-Prediction-of-Crop-Production.pdf
 % Another literature review highlighting the success of using ANNs
 % for prediction of crop yield using weather as a predictor.
+\bibitem{litrev1}
+   Paswan, Raju Prasad, and Shahin Ara Begum,
+   \emph{``Regression and Neural Networks Models for Prediction of Crop
+   Production''}.
+   International Journal of Scientific \& Engineering Research,
+   Volume 4, Issue 9, September 2013.
 
 % http://www.ssca.org.in/2011/4Amrender.pdf
-% Statistics and Applications
-%Volume 9, Nos. 1&2, 2011 (New Series), pp. 55-69
-%Weather based forecasting model for crops yield using neural network
-%approach
-%Ratna Raj Laxmi1
-%and Amrender Kumar2
 % Used various BP algorithms to produce NN predictor of crop yields
 % for Rice, Wheat, and Sugarcane using a variety of weather data.
 % Able to achieve single digit Mean Absolute Percent Error.
@@ -57,14 +58,12 @@ there
 % 6 hidden neurons per hidden layer.
 % Hyperbolic tangent used as hidden neuron activation function.
 % Assumed tanh for output layer
+\bibitem{laxmi11}
+   Laxmi, Ratna Raj, and Amrender Kumar,
+   \emph{``Weather based forecasting model
+   for crops yield using neural network approach''}.
+   Statistics and Applications, Volume 9, Nos. 1\&2, 2011, pp. 55-69.
 
-% PREDICTION OF CROP YIELDS ACROSS FOUR CLIMATE ZONES IN GERMANY:
-% AN ARTIFICIAL NEURAL NETWORK APPROACH
-%Working Paper FNU-34
-%Thomas Heinzowa,*
- %and Richard S.J. Tola,b,c 
-% 2003, see http://econpapers.repec.org/paper/sgcwpaper/34.htm
-% for more citation info.
 % Input variables:
 % Daily mean and max temp.
 % Daily mean dewpoint
@@ -73,6 +72,12 @@ there
 % (hyperbolic tangent)
 % Used ``identity'' activation function for output layer.
 % See table two for overview of architecture.
+\bibitem{germany}
+   Heinzow, Thomas and Tol, Richard,
+   \emph{``PREDICTION OF CROP YIELDS ACROSS FOUR CLIMATE ZONES IN GERMANY:
+   AN ARTIFICIAL NEURAL NETWORK APPROACH''}.
+   No FNU-34, Working Papers,
+   Research unit Sustainability and Global Change, Hamburg University, 2003.
 
 % Prediction of Tangerine Yield Using Artificial Neural Network (ANN)
 %Pichaya Boonprasom1
@@ -80,17 +85,30 @@ there
 
 % http://www.thaiscience.info/journals/Article/Prediction%20of%20tangerine%20yield%20using%20artificial%20neural%20network%20%28ann%29.pdf
 
-%% All sources tie weather to crop yield, very strong basis for success
-% w/r/t my project.
-% It appears I go out on a limb using monthly prices as output values.
 % Tang. Yield goes as far as trying to use quantized weather information
 % (avg monthly rainfall, avg monthly temp, avg monthly relative humidity)
 % of the primary tangerine producing regions in China to predict end of
 % year crop yield.
 % Multiple Neural Network configurations are used to determine ideal
+\bibitem{tangerines}
+   Boonprasom, Pichaya, and Gumpanart Bumroongitt,
+   \emph{``Prediction of Tangerine Yield Using Artifical Neural Network
+   (ANN)''}.
+   CMU. Journal, 2005, Vol. 4(1) pp. 39 - 48.
+
+\end{thebibliography}
+
+% Good reference for when structure needs to arrive.
+% http://en.wikibooks.org/wiki/LaTeX/Document_Structure
+
+
+
 % input factors and hidden neuron count.
 % The paper seems to focus on determining ideal neuron count and input
 % feature.
 % No direct reference to activation functions was found.
 
+%% All sources tie weather to crop yield, very strong basis for success
+% w/r/t my project.
+% It appears I go out on a limb using monthly prices as output values.
 \end{document}
