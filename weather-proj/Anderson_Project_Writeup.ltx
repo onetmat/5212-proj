@@ -6,22 +6,134 @@
 \usepackage{amsmath}
 \usepackage{graphicx}
 
+% Create a command that makes a nice horizontal line across
+% the text section of a page.
+\newcommand{\HRule}{\rule{\textwidth}{1pt}}
 
 \begin{document}
 
-%% Title page needs Name of Project,
-%% Author name
-%% class, semester
-%% Date of submittal
+\begin{titlepage}
+\begin{center}
+\HRule \\[0.5cm]
+{\large \bfseries Using a Neural Network to Predict Corn Prices
+From Weather}
+\HRule \\[1.5cm]
 
-Hi
+\noindent
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushleft}
+\emph{Author:}\\
+Mathew \textsc{Anderson} \\[0.25cm]
+\emph{Email:}\\
+msar4c@mst.edu
+\end{flushleft}
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.4\textwidth}
+\begin{flushright}
+\emph{Course:}\\
+SysEng 5212, Spring 2015 \\
+\end{flushright}
+\end{minipage} % end right side mini-page
+\vfill
+% Put date at bottom of page
+{\large \today}
+\end{center}
+\end{titlepage}
 
-% How to make nice horizontal line:
-\rule{\textwidth}{1pt}
+% Next comes TOC
+\tableofcontents
+% Table of Figures
+%\listoffigures
+% Table of Tables
+%\listoftables
+\pagebreak
 
-there
+% Introduction section
+\section{Introduction}
+\subsection{Overview}
+For most of the late 20th century, the United States led the world in corn
+production\cite{cornstat} with Iowa providing a
+large contribution toward annual yield\cite{cornbelt}.
+Although many factors can affect agricultural yield over a given season, the
+weather plays a crucial role\cite{EPA}.
+A reduction in year over year corn yield can be expected given flood or drought
+conditions during the planting season (April-May)\cite{tradecorn}.
+``Ideal'' weather conditions should therefore be easily recognizable assuming
+optimal soil conditions and appropriate land management (pesticides, etc).
+My project therefore seeks to relate observed weather conditions to effects on
+end year corn yields using monthly corn prices as a proxy for year end yield.
+\subsection{Inspiration and Precedent}
+Having learned about \emph{Adaline} circuits during a conversation with a
+co-worker, I began to read the works of Bernard Widrow and subsequently stumbled
+onto a paper by Dr. Hu regarding neural networks and weather.
+Dr. Hu performed an experiment using multiple Adaline circuits, colloquially termed
+\emph{Madaline}, and observed weather data from multiple weather stations
+covering a ``large'' area to predict rainfall in the San Francisco Bay area
+\cite{hu}.
+The detailed description of the work and high degree of accuracy spawned a great
+deal of attention for using Neural Networks (NN) to predict the weather.
+While the algorithms behind NNs have evolved over time, their use as a predictor
+of weather remains popular \cite{litrev1} and continues to maintain accuracy
+on par with other, modern prediction methods \cite{nnweather}. \\
 
+Considerably precedent aside, the articles reviewed for this project predicted
+\emph{year end yield} of various crops based on weather observations\cite{laxmi,
+germany,tangerines}.
+Each of the implementation specific articles performed some sort of attribute
+subset selection and feature reduction.
+Average rainfall, humidity, and temperature were popular choices\cite{laxmi, 
+tangerines} although the time scales different from monthly averages
+\cite{tangerines} to daily observations (including one morning specific value)
+\cite{laxmi}.
+Where humidity was not directly used, daily mean dewpoint was substituted
+\cite{germany}.
+The authors of \cite{laxmi} described a fairly rigorous preprocessing system
+that yielded their feature subset.
+In another case, the feature subset was determined experimentally by various
+NN architectures\cite{tangerines}.
+In each case, the output of the NN was intended to be a prediction of the yield
+of a specific crop or set of crops for a pre-defined region. \\
+
+The algorithm of choice for using NNs to predict the weather is Backpropagation
+(BP).
+The literature review demonstrates use of various alternatives to the core BP
+algorithm (Conjuage-Gradient method, Levenberg-Marquardt) in addition to
+considerable variation in architecture itself\cite{laxmi,germany,tangerines}.
+My review of the articles indicates that the performance of BP using weather data
+as a predictor relies chiefly on the amount of input features and the area covered.
+Attempting to predict crop yields across large climate zones yielded impressive
+results, as measured by Mean Absolute Percent Error (MAPE)\cite{laxmi,germany}.
+In contrast, measuring the yield of one particular crop over a smaller area
+resulted in a higher error rate\cite{tangerines}.
+I found this relation curious since the authors used similar
+feature subsets despite considerable variance in their justification of use:
+\begin{itemize}
+\item Temperature
+\item Precipitation
+\item Ambient moisture (humidity or dewpoint)
+\end{itemize}
+
+\pagebreak
 \begin{thebibliography}{99}
+
+% Proof that the US leads the world in corn production.
+\bibitem{cornstat}
+   United States Department of Agriculture Economic Research Service,
+   \emph{``USDA ERS - Corn: Trade''},
+   Online Article,
+   http://www.ers.usda.gov/topics/crops/corn/trade.aspx.
+   Last Accessed on 6 May, 2015.
+
+% Proof that IA leads US production
+\bibitem{cornbelt}
+   United States Department of Agriculture National Agricultural
+   Statistics Service,
+   \emph{``NASS - Charts and Maps - County Maps;
+   Corn: Planted Acreage by County''}.
+   Online Article,
+   http://www.nass.usda.gov/Charts\_and\_Maps/Crops\_County/cr-pl.asp.
+   Last Accessed on 6 May, 2015.
 
 % Brief overview of corn futures trading; why would anyone care? Basic
 % terminology, hints of the weather affecting yield.
@@ -32,10 +144,10 @@ there
    Market Technologies,
    \emph{``Trading Corn Futures''}.
    Online Article,
-   www.tradertech.com/trading/corn.
+   http://www.tradertech.com/trading/corn.
    Last Accessed on 5 May, 2015.
 
-% General takl about food supply, has graph demonstrating
+% General talk about food supply, has graph demonstrating
 % profound effect weather can have. Also highlights
 % effects of blight.
 \bibitem{EPA}
@@ -86,7 +198,7 @@ there
 % 6 hidden neurons per hidden layer.
 % Hyperbolic tangent used as hidden neuron activation function.
 % Assumed tanh for output layer
-\bibitem{laxmi11}
+\bibitem{laxmi}
    Laxmi, Ratna Raj, and Amrender Kumar,
    \emph{``Weather based forecasting model
    for crops yield using neural network approach''}.
@@ -133,7 +245,7 @@ there
    The Weather Channel, LLC,
    \emph{``Weather History and Data Archive''}.
    Online Article,
-   www.wunderground.com/history.
+   http://www.wunderground.com/history.
    Last Accessed on 5 May, 2015.
 
 % Any reference to output data should cite:
