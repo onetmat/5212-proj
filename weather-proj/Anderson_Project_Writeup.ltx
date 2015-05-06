@@ -46,7 +46,7 @@ SysEng 5212, Spring 2015 \\
 % Table of Figures
 %\listoffigures
 % Table of Tables
-%\listoftables
+\listoftables
 \pagebreak
 
 % Introduction section
@@ -93,7 +93,8 @@ that yielded their feature subset.
 In another case, the feature subset was determined experimentally by various
 NN architectures\cite{tangerines}.
 In each case, the output of the NN was intended to be a prediction of the yield
-of a specific crop or set of crops for a pre-defined region. \\
+of a specific crop or set of crops at year end (assumed to imply season end)
+for a pre-defined region. \\
 
 The algorithm of choice for using NNs to predict the weather is Backpropagation
 (BP).
@@ -113,6 +114,136 @@ feature subsets despite considerable variance in their justification of use:
 \item Precipitation
 \item Ambient moisture (humidity or dewpoint)
 \end{itemize}
+
+\section{Approach}
+My project takes a financial slant to the prediction of crop yields.
+I selected corn as the target of prediction due to its investment popularity.
+Corn's uses span industrial applications, livestock feed, and human consumption
+\cite{tradecorn}.
+The attention thus received provides ample data points to target, as can be seen
+in \cite{outputdata}.
+There are a wide variety of corn cultivars\cite{tradecorn} and my selection of
+U.S. No. 2 Yellow was arbitrary based on available data.\\
+
+To increase the overall size of the training and testing sample sets, I decided
+to use monthly prices instead of yearly yields.
+I believe that using monthly prices more accurately captures the effects of
+floods, droughts, and subsequent weather that would remedy those situations.
+Predicting monthly prices also reduces the size of any given input sample.
+My time scale and data therefore more closely resemble the approach of
+\cite{germany} than any other article considered.
+My single crop, relatively focused region follows in the footsteps of
+\cite{tangerines}.
+
+\subsection{Input Data}
+\subsubsection{Source}
+The weather website ``Weather Underground''(WU) \cite{WU} claims to have historical
+weather information going back at least as far as the 1970s.
+The website offers a ``free'' account with API access to weather ``anywhere''.
+A typical weather sample can be accessed by issuing a simple HTTP request.
+Please see the appendix of code listing for an example of such a query.
+A variety of responses can be selected based on the query, for my project I
+selected JSON (\emph{http://json.org}).
+While I had good luck retrieving weather samples for my target area, described
+below, I quickly learned that WU contains only partial data for smaller cities
+before the mid-1990s.
+
+\subsubsection{Data Processing}
+As stated above, my references perform considerable data pre-processing.
+Going all the way back to Dr. Hu\cite{hu}, simple quantization of selected
+weather parameters provide results suitable for use as predictors.
+Considering my other implementation article's list of input parameters, I selected
+the follow feature subset for my project:
+\begin{itemize}
+\item Average Daily Temperature measured in $^{\circ}F$
+\item Total Daily Precipitation measured in inches (in).
+\item Average Daily Pressure measured in inches of Mercury (inHg).
+\end{itemize}
+The selection of temperature and precipitation were intended to follow in the
+footsteps of the articles reviewed.
+The selection of pressure derived from the following:
+\begin{itemize}
+\item A nod to Dr. Hu's original work\cite{hu}.
+\item Bridge the gap between humidity and dewpoint
+   found in \cite{laxmi, germany,tangerines}.
+\end{itemize}
+
+Thus selected, I classified my input into ``bins'' where membership in a bin
+implies a value between the highest value allowed by its precendent and less than
+or equal to the max value specified by the bin:
+
+\vspace{6pt}
+
+\begin{table}[h]
+\noindent
+\begin{tabular}{|c|c|c|c|}
+\hline
+Bin & Implied Avg Daily Temp ($^{\circ}F$) &
+Implied Precip (in) & Implied Avg Daily Press (inHg) \\
+\hline
+0 & $<= 0$ & $<= 0.25$& $<= 29.4$ \\ \hline
+1 & 10 & 0.5 & 29.5 \\ \hline
+2 & 20 & 0.75 & 29.6 \\ \hline
+3 & 30 & 1.00 & 29.7 \\ \hline
+4 & 40 & 1.25& 29.8 \\ \hline
+5 & 50 & 1.50& 29.9 \\ \hline
+6 & 60 & 1.75 & 30.0\\ \hline
+7 & 70 & 2.00& 30.1\\ \hline
+8 & 80 & 2.25& 30.2\\ \hline
+9 & 90 & 2.50& 30.3\\ \hline
+10 & 100 & 2.75& 30.4\\ \hline
+11 & $>= 110$ & $>= 3.00$& $>= 30.5$ \\ \hline
+
+\end{tabular}
+\caption{Weather Data Bins}
+\end{table}
+The selection of these bin boundaries were based on a simple minimum/maximum
+search of the weather data available.
+
+\subsubsection{Area Coverage}
+Knowing that Iowa provides a large contribution of the yearly crop production
+\cite{cornbelt}
+and knowing that, in general, larger weather sample coverage area yields better
+results\cite{hu,laxmi,germany,tangerines}, I attempted to select cities that
+covered most of the state of Iowa to serve as ``Weather Stations''.
+The following table illustrates cities selected and their 
+approximate geographical positions:
+\begin{table}
+\begin{tabular}{|c|c|c|}
+\hline
+City Name & Latitude (decimal $^{\circ}$) & Longitude (decimal $^{\circ}$)\\ \hline
+Algona & 43.071734 N & 94.234457 W\\ \hline
+Ames & 42.025203 N & 93.625346 W \\ \hline
+Atlantic & 41.397377 N & 95.014094 W\\ \hline
+Audubon & 41.717520 N & 94.930589 W\\ \hline
+Boone & 42.056327 N & 93.875355 W\\ \hline
+Burlington & 40.812335 N & 91.127876 W\\ \hline
+Decorah & 43.300703 N & 91.788224 W\\ \hline
+Dubuque & 42.499448 N & 90.691348 W\\ \hline
+Sioux City & 42.491205 N & 96.385985 W\\ \hline
+\end{tabular}
+
+\caption{Weather Stations Selected}
+\end{table}
+
+\subsection{Output Data}
+A complete listing of my output data can be found at \cite{outputdata}.
+The table represents the end of month price of corn as measured in US\$
+per metric ton.
+I used the month over month delta as the actual output value and used min-max
+normalization to the range $[-0.8, 0.8]$ to facilitate ease of use in a neural
+network.
+For my project, I used corn prices from March 1985 to March 2015. 
+Over that time frame, a value of -0.8 implies at least a 20\% monthly decrease
+in the price of corn.
+A value of 0.8 implies an increase of at least 20\%.
+Again, given the limitations of my data source, I split the output data into two
+discrete subsets.
+The first subset covered March 1985 to December 1999 and constitutes the output
+of sub-optimal input data.
+This output data corresponds to the dataset used for homework 6.
+The second subset covers January $1^{st}$, 2004 to December $31^{st}$, 2014 and is
+considered the output for the optimal input data.
 
 \pagebreak
 \begin{thebibliography}{99}
