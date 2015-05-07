@@ -45,7 +45,7 @@ SysEng 5212, Spring 2015 \\
 % Next comes TOC
 \tableofcontents
 % Table of Figures
-%\listoffigures
+\listoffigures
 % Table of Tables
 \listoftables
 \pagebreak
@@ -142,12 +142,23 @@ The weather website ``Weather Underground''(WU) \cite{WU} claims to have histori
 weather information going back at least as far as the 1970s.
 The website offers a ``free'' account with API access to weather ``anywhere''.
 A typical weather sample can be accessed by issuing a simple HTTP request.
-Please see the appendix of code listing for an example of such a query.
+Please see figure \ref{AppA:curl} on page \pageref{AppA:curl} for an example of such a query.
 A variety of responses can be selected based on the query, for my project I
 selected JSON (\emph{http://json.org}).
 While I had good luck retrieving weather samples for my target area, described
 below, I quickly learned that WU contains only partial data for smaller cities
-before the mid-1990s.
+before the mid-1990s. \\
+
+Assembling the weather queries themselves took little more than a combination
+of Ptyhon and Bash scripting.
+First, the date strings suitable to query had to be generated, see figure
+\ref{AppA:dategen} on page \pageref{AppA:dategen} for an example of generating
+a range of dates using Python.
+Second, the dates needed to have the dash characters removed and a skeletal
+directory structure needed to be setup to handle the individual calls to
+the Weather Underground API.
+Please see the file \emph{make\_queries.sh}, included in the submittal package,
+for more information.
 
 \subsubsection{Data Processing}
 As stated above, my references perform considerable data pre-processing.
@@ -228,7 +239,7 @@ Sioux City & 42.491205 N & 96.385985 W\\ \hline
 (Source: Google Maps)}
 \end{table}
 
-\subsection{Output Data}
+\subsection{Output Data} \label{sec:outputData}
 A complete listing of my output data can be found at \cite{outputdata}.
 The table represents the end of month price of corn as measured in US\$
 per metric ton.
@@ -246,6 +257,34 @@ of sub-optimal input data.
 This output data corresponds to the dataset used for homework 6.
 The second subset covers January $1^{st}$, 2004 to December $31^{st}$, 2014 and is
 considered the output for the optimal input data.
+\subsection{Neural Network Design}
+As previously indicated, I decided to pursue a Multi-Layer Perceptron (MLP) with
+one hidden layer and one output layer.
+The hidden layer used the hyperbolic tangent function as an activation
+function and had a variable number of neurons, discussed below.
+The output layer consisted of one neuron and used the linear transfer
+function or ``purelin'' as its activation function.
+Table \ref{bp:param} highlights my parameter selection for the BP algorithm:
+\begin{table}[h]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+Momentum & Maximum Number & Slope of & Cutoff for & Use Nguyen- \\
+Factor & of Iterations & tanh function & growth of error & Widrow weight Init \\
+\hline
+0.01 & 200 & 1 & 0.001 & True (1) \\ \hline
+\end{tabular}
+\caption{Backpropagation Parameters}
+\label{bp:param}
+\end{table}
+
+Due to my binning process, I did not normalize any training inputs and the
+training outputs were normalized according to section \ref{sec:outputData}.
+
+\section{Results}
+\subsection{Optimal Data}
+\subsection{Sub-Optimal Data}
+
+\section{Conclusion}
 
 \pagebreak
 \appendix
@@ -257,6 +296,59 @@ curl http://api.wunderground.com/
       q/CA/San_Francisco.json
 \end{lstlisting}
 \caption{Sample Weather Data Request}
+\label{AppA:curl}
+\end{figure}
+
+\begin{figure}[h]
+\begin{lstlisting}[frame=single]
+#! /usr/bin/python
+
+# A small script to generate all of the days between
+# 1 January, 1970 and 1 January 2000 (not inclusive
+# of 1 Jan. 2000).
+from datetime import date, timedelta as td
+
+d1 = date(2004, 1, 1)
+d2 = date(2015, 1, 1)
+
+delta = d2-d1
+
+# Dates are printed YYYY-MM-DD format
+# Which is almost perfect for WUnderground API
+for i in range(delta.days):
+   print (d1 + td(days=i))
+\end{lstlisting}
+\caption{Generating Dates for Queries}
+\label{AppA:dategen}
+\end{figure}
+
+\begin{figure}[h]
+\begin{lstlisting}[frame=single]
+Assuming a directory structure similar to
+~/
+.
+..
+IA/
+  .
+  ..
+  cities
+DateGen/
+  .
+  ..
+  days
+  DateGen.py
+make_queries.sh
+Where "DateGen/days" contained a pre-processed
+listing of dates in YYYYMMDD format and cities was
+file containing a listing of cities to be used as weather
+stations, one per line; the make_queries.sh
+script could be invoked as
+follows:
+./make_queries.sh IA DateGen/days
+
+\end{lstlisting}
+\caption{Example Usage of Query Script}
+\label{AppA:make_queries}
 \end{figure}
 
 \section{Contents of Submission}
@@ -266,6 +358,9 @@ along with a brief overview of their contents:
 \begin{tabular}{|c|c|}
 \hline
 Name of File & Contents \\ \hline
+DateGen.py & General Date Generation Routine \\ \hline
+make\_queries.sh & Bash script to flesh out \\
+ & a directory structure for raw input data \\ \hline
 \end{tabular}
 \caption{Files and their Contents}
 \end{table}
