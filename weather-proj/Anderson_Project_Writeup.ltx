@@ -236,6 +236,14 @@ in the submission file to automatically generate invocations of the
 \emph{ClassifyDay.py} script in a predictable manner.
 Note that I retained my 28-day rule from homework 6 to simplify the data
 processing.
+Each invocation of \emph{ClassifyDay.py} must be run manually, also
+hyphen characters need to be removed from the date output only
+(dates will print YYYY-MM-DD form but must be converted to YYYYMMDD form).
+Finally, the output of \emph{ClassifyDay.py} must be collected into
+a single CSV file for subsequent input into matlab.
+
+\emph{Note that this entire process has been performed and pre-saved into
+a .mat file called ProjectInput.mat.}
 
 \subsubsection{Area Coverage}
 Knowing that Iowa provides a large contribution of the yearly crop production
@@ -264,6 +272,27 @@ Waterloo & 42.496958 N & 92.344717 W \\ \hline
 \caption[Weather Stations Selected]{Weather Stations Selected
 (Source: Google Maps)}
 \end{table}
+
+Please see figure \ref{Fig:Corn}, page \pageref{Fig:Corn}, for a pictorial
+representation of all state's contributions to corn yield for 2010
+\cite{cornbelt}.
+Then see figure \ref{Fig:WeatherStations}, page \pageref{Fig:WeatherStations},
+for the same pictorial representation of the relative geographic locations
+of the cities chosen for weather stations.
+The counties in which the cities reside have been colored to give an idea
+of the geographical spread of my input.
+
+\begin{figure}
+\makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{OMarked.png}}
+\caption{Distriubtion of Corn harvest}
+\label{Fig:Corn}
+\end{figure}
+
+\begin{figure}
+\makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{Marked.png}}
+\caption[Weather Station Locations]{Overlay of Weather Station Locations}
+\label{Fig:WeatherStations}
+\end{figure}
 
 \subsection{Output Data} \label{sec:outputData}
 A complete listing of my output data can be found at \cite{outputdata}.
@@ -399,6 +428,9 @@ ClassifyDay.py & Parses weather data and bins selected features
 ProjDateGen.py & Generates appropriate invocations of ClassifyDay.py
 \hfill \\
  & for all days included as input samples for this project
+\hfill \\ \hline
+ProjectInput.mat & Pre-processed weather input
+\hfill \\ \hline
 \end{tabular}
 \caption{Files and their Contents}
 \end{table}

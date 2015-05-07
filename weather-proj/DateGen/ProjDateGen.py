@@ -5,7 +5,7 @@
 # of 1 Jan. 2015).
 from datetime import date, timedelta as td
 
-d1 = date(2004, 4, 1)
+d1 = date(2004, 1, 1)
 d2 = date(2015, 1, 1)
 
 delta = d2-d1
@@ -16,7 +16,7 @@ delta = d2-d1
 baseDir = '/home/msa/projects/cs5212/weather-proj/IA/proc_data/'
 
 cities = ['Ames', 'Atlantic', 'Des_Moines', 'Dubuque', 'Estherville', \
-   'Lamon', 'Mason_City', 'Ottumwa', 'Sioux_City', 'Waterloo']
+   'Lamoni', 'Mason_City', 'Ottumwa', 'Sioux_City', 'Waterloo']
 
 # foreach day
 for i in range(delta.days):
