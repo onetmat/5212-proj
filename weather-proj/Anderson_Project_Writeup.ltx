@@ -154,11 +154,11 @@ of Ptyhon and Bash scripting.
 First, the date strings suitable to query had to be generated, see figure
 \ref{AppA:dategen} on page \pageref{AppA:dategen} for an example of generating
 a range of dates using Python.
-Second, the dates needed to have the dash characters removed and a skeletal
-directory structure needed to be setup to handle the individual calls to
-the Weather Underground API.
-Please see the file \emph{make\_queries.sh}, included in the submittal package,
-for more information.
+Second, the dates needed to have the dash characters removed (a manual
+operation) and a skeletal directory structure needed to be setup to handle
+the output of individual calls to the Weather Underground API.
+Please see the file \emph{make\_queries.sh}, included in the submittal
+package, for more information.
 
 \subsubsection{Data Processing}
 As stated above, my references perform considerable data pre-processing.
@@ -171,8 +171,8 @@ the follow feature subset for my project:
 \item Total Daily Precipitation measured in inches (in).
 \item Average Daily Pressure measured in inches of Mercury (inHg).
 \end{itemize}
-The selection of temperature and precipitation were intended to follow in the
-footsteps of the articles reviewed.
+The selection of temperature and precipitation were intended to follow in
+the footsteps of the articles reviewed.
 The selection of pressure derived from the following:
 \begin{itemize}
 \item A nod to Dr. Hu's original work\cite{hu}.
@@ -181,8 +181,8 @@ The selection of pressure derived from the following:
 \end{itemize}
 
 Thus selected, I classified my input into ``bins'' where membership in a bin
-implies a value between the highest value allowed by its precendent and less than
-or equal to the max value specified by the bin:
+implies a value between the highest value allowed by its precendent and
+less than or equal to the max value specified by the bin:
 
 \vspace{6pt}
 
@@ -321,10 +321,9 @@ for i in range(delta.days):
 \caption{Generating Dates for Queries}
 \label{AppA:dategen}
 \end{figure}
-
-\begin{figure}[h]
-\begin{lstlisting}[frame=single]
+\subsection{Constructing Weather Queries}
 Assuming a directory structure similar to
+\begin{verbatim}
 ~/
 .
 ..
@@ -338,12 +337,15 @@ DateGen/
   days
   DateGen.py
 make_queries.sh
-Where "DateGen/days" contained a pre-processed
+\end{verbatim}
+Where ``DateGen/days'' contained a pre-processed
 listing of dates in YYYYMMDD format and cities was
 file containing a listing of cities to be used as weather
-stations, one per line; the make_queries.sh
+stations, one per line; the make\_queries.sh
 script could be invoked as
 follows:
+\begin{figure}[h]
+\begin{lstlisting}[frame=single]
 ./make_queries.sh IA DateGen/days
 
 \end{lstlisting}
@@ -355,12 +357,12 @@ follows:
 The following table lists all files submitted in the submission file
 along with a brief overview of their contents:
 \begin{table}[h]
-\begin{tabular}{|c|c|}
+\begin{tabular}{|c|l|}
 \hline
-Name of File & Contents \\ \hline
-DateGen.py & General Date Generation Routine \\ \hline
-make\_queries.sh & Bash script to flesh out \\
- & a directory structure for raw input data \\ \hline
+Name of File & \multicolumn{1}{c|}{Contents} \\ \hline
+DateGen.py & General Date Generation Routine \hfill  \\ \hline
+make\_queries.sh & Bash script to generate a directory structure \hfill \\
+ & for raw input data\hfill \\ \hline
 \end{tabular}
 \caption{Files and their Contents}
 \end{table}
@@ -514,10 +516,4 @@ make\_queries.sh & Bash script to flesh out \\
 % Good reference for when structure needs to arrive.
 % http://en.wikibooks.org/wiki/LaTeX/Document_Structure
 
-
-
-
-%% All sources tie weather to crop yield, very strong basis for success
-% w/r/t my project.
-% It appears I go out on a limb using monthly prices as output values.
 \end{document}
