@@ -160,7 +160,7 @@ the output of individual calls to the Weather Underground API.
 Please see the file \emph{make\_queries.sh}, included in the submittal
 package, for more information.
 
-\subsubsection{Data Processing}
+\subsubsection{Data Pre-Processing} \label{sec:DataProc}
 As stated above, my references perform considerable data pre-processing.
 Going all the way back to Dr. Hu\cite{hu}, simple quantization of selected
 weather parameters provide results suitable for use as predictors.
@@ -209,8 +209,33 @@ Implied Precip (in) & Implied Avg Daily Press (inHg) \\
 \end{tabular}
 \caption{Weather Data Bins}
 \end{table}
-The selection of these bin boundaries were based on a simple minimum/maximum
-search of the weather data available.
+
+The selection of these bins align with
+{\small \emph{http://omahanebraskawx.com/wxbarodetail.php}}. At first these bins
+appeared arbitrary, so I confirmed that a simple minimum/maximum analysis
+of the source data in conjunction with some obvious facts about weather
+could be used to justify similar binning.
+When I say, ``some obvious facts'', I specifically mean:
+\begin{enumerate}
+\item Corn does not grow through the winter so any temperature bin
+containing average values below 32 $^{\circ}$F is largely irrelevant.
+However, a late frost will have an impact\cite{EPA}
+and it is important to capture some below freezing temperature information.
+\item A day with negative precipitation defies commonly accepted laws
+of physics.
+\item The average monthly rainfall in the state Iowa peaks at around
+4.91 inches in the summer (source: \emph{http://average-rainfall.findthebest.com/d/d/Iowa}).
+\end{enumerate}
+
+After acquiring input data as described at the end of section
+\ref{sec:DataProc}, the binning process is performed by two short Python
+scripts contained within the submission package \emph{ClassifyBuckets.py}
+and \emph{ClassifyDay.py}.
+A modified version of the \emph{GenerateDates.py} script is included
+in the submission file to automatically generate invocations of the
+\emph{ClassifyDay.py} script in a predictable manner.
+Note that I retained my 28-day rule from homework 6 to simplify the data
+processing.
 
 \subsubsection{Area Coverage}
 Knowing that Iowa provides a large contribution of the yearly crop production
@@ -224,13 +249,8 @@ approximate geographical positions:
 \begin{tabular}{|c|c|c|}
 \hline
 City Name & Latitude (decimal $^{\circ}$) & Longitude (decimal $^{\circ}$)\\ \hline
-Algona & 43.071734 N & 94.234457 W\\ \hline
 Ames & 42.025203 N & 93.625346 W \\ \hline
 Atlantic & 41.397377 N & 95.014094 W\\ \hline
-Audubon & 41.717520 N & 94.930589 W\\ \hline
-Boone & 42.056327 N & 93.875355 W\\ \hline
-Burlington & 40.812335 N & 91.127876 W\\ \hline
-Decorah & 43.300703 N & 91.788224 W\\ \hline
 Dubuque & 42.499448 N & 90.691348 W\\ \hline
 Sioux City & 42.491205 N & 96.385985 W\\ \hline
 \end{tabular}
@@ -354,15 +374,25 @@ follows:
 \end{figure}
 
 \section{Contents of Submission}
-The following table lists all files submitted in the submission file
-along with a brief overview of their contents:
+The following table lists all files submitted along with a brief overview
+of their contents:
 \begin{table}[h]
 \begin{tabular}{|c|l|}
 \hline
 Name of File & \multicolumn{1}{c|}{Contents} \\ \hline
-DateGen.py & General Date Generation Routine \hfill  \\ \hline
-make\_queries.sh & Bash script to generate a directory structure \hfill \\
- & for raw input data\hfill \\ \hline
+DateGen.py & General date generation script
+\hfill  \\ \hline
+make\_queries.sh & Bash script to generate a directory structure
+\hfill \\
+ & for raw input data
+\hfill \\ \hline
+ClassifyBuckets.py & Contains the data binning and helper method
+\hfill \\ \hline
+ClassifyDay.py & Parses weather data and bins selected features
+\hfill \\ \hline
+ProjDateGen.py & Generates appropriate invocations of ClassifyDay.py
+\hfill \\
+ & for all days included as input samples for this project
 \end{tabular}
 \caption{Files and their Contents}
 \end{table}
