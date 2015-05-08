@@ -2,7 +2,7 @@
 %% By Mathew Anderson
 
 \documentclass{article}
-\pagestyle{empty}
+\pagestyle{plain}
 \usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{listings}
@@ -64,7 +64,7 @@ conditions during the planting season (April-May)\cite{tradecorn}.
 optimal soil conditions and appropriate land management (pesticides, etc).
 My project therefore seeks to relate observed weather conditions to effects on
 end year corn yields using monthly corn prices as a proxy for year end yield.
-\subsection{Inspiration and Precedent}
+\subsection{Inspiration and Precedent} \label{Sec:Prec}
 Having learned about \emph{Adaline} circuits during a conversation with a
 co-worker, I began to read the works of Bernard Widrow and subsequently stumbled
 onto a paper by Dr. Hu regarding neural networks and weather.
@@ -87,7 +87,7 @@ Average rainfall, humidity, and temperature were popular choices\cite{laxmi,
 tangerines} although the time scales different from monthly averages
 \cite{tangerines} to daily observations (including one morning specific value)
 \cite{laxmi}.
-Where humidity was not directly used, daily mean dewpoint was substituted
+Where humidity was not directly used, daily mean dew point was substituted
 \cite{germany}.
 The authors of \cite{laxmi} described a fairly rigorous preprocessing system
 that yielded their feature subset.
@@ -95,12 +95,12 @@ In another case, the feature subset was determined experimentally by various
 NN architectures\cite{tangerines}.
 In each case, the output of the NN was intended to be a prediction of the yield
 of a specific crop or set of crops at year end (assumed to imply season end)
-for a pre-defined region. \\
+for a predefined region. \\
 
 The algorithm of choice for using NNs to predict the weather is Backpropagation
 (BP).
 The literature review demonstrates use of various alternatives to the core BP
-algorithm (Conjuage-Gradient method, Levenberg-Marquardt) in addition to
+algorithm (Conjugate-Gradient method, Levenberg-Marquardt) in addition to
 considerable variation in architecture itself\cite{laxmi,germany,tangerines}.
 My review of the articles indicates that the performance of BP using weather data
 as a predictor relies chiefly on the amount of input features and the area covered.
@@ -150,7 +150,7 @@ below, I quickly learned that WU contains only partial data for smaller cities
 before the mid-1990s. \\
 
 Assembling the weather queries themselves took little more than a combination
-of Ptyhon and Bash scripting.
+of Python and Bash scripting.
 First, the date strings suitable to query had to be generated, see figure
 \ref{AppA:dategen} on page \pageref{AppA:dategen} for an example of generating
 a range of dates using Python.
@@ -181,7 +181,7 @@ The selection of pressure derived from the following:
 \end{itemize}
 
 Thus selected, I classified my input into ``bins'' where membership in a bin
-implies a value between the highest value allowed by its precendent and
+implies a value between the highest value allowed by its precedent and
 less than or equal to the max value specified by the bin:
 
 \vspace{6pt}
@@ -242,8 +242,9 @@ hyphen characters need to be removed from the date output only
 Finally, the output of \emph{ClassifyDay.py} must be collected into
 a single CSV file for subsequent input into matlab.
 
-\emph{Note that this entire process has been performed and pre-saved into
-a .mat file called ProjectInput.mat.}
+\emph{Note: all Python/Bash data processing has been performed and
+pre-saved into MATLAB friendly files, for both the input and output data,
+as described in Appendix \ref{AppB} on page \pageref{AppB}}.
 
 \subsubsection{Area Coverage}
 Knowing that Iowa provides a large contribution of the yearly crop production
@@ -251,9 +252,9 @@ Knowing that Iowa provides a large contribution of the yearly crop production
 and knowing that, in general, larger weather sample coverage area yields better
 results\cite{hu,laxmi,germany,tangerines}, I attempted to select cities that
 covered most of the state of Iowa to serve as ``Weather Stations''.
-The following table illustrates cities selected and their 
+Table \ref{tab:GeoCities} illustrates cities selected and their 
 approximate geographical positions:
-\begin{table}
+\begin{table}[h]
 \begin{tabular}{|c|c|c|}
 \hline
 City Name & Latitude (decimal $^{\circ}$) & Longitude (decimal $^{\circ}$)\\ \hline
@@ -271,6 +272,7 @@ Waterloo & 42.496958 N & 92.344717 W \\ \hline
 
 \caption[Weather Stations Selected]{Weather Stations Selected
 (Source: Google Maps)}
+\label{tab:GeoCities}
 \end{table}
 
 Please see figure \ref{Fig:Corn}, page \pageref{Fig:Corn}, for a pictorial
@@ -280,11 +282,11 @@ Then see figure \ref{Fig:WeatherStations}, page \pageref{Fig:WeatherStations},
 for the same pictorial representation of the relative geographic locations
 of the cities chosen for weather stations.
 The counties in which the cities reside have been colored to give an idea
-of the geographical spread of my input.
+of their geographical spread.
 
 \begin{figure}
 \makebox[\textwidth][c]{\includegraphics[width=1.5\textwidth]{OMarked.png}}
-\caption{Distriubtion of Corn harvest}
+\caption{Distribution of Corn harvest}
 \label{Fig:Corn}
 \end{figure}
 
@@ -296,8 +298,8 @@ of the geographical spread of my input.
 
 \subsection{Output Data} \label{sec:outputData}
 A complete listing of my output data can be found at \cite{outputdata}.
-The table represents the end of month price of corn as measured in US\$
-per metric ton.
+The table within the website represents the end of month price of corn as
+measured in US\$ per metric ton.
 I used the month over month delta as the actual output value and used min-max
 normalization to the range $[-0.8, 0.8]$ to facilitate ease of use in a neural
 network.
@@ -305,13 +307,13 @@ For my project, I used corn prices from March 1985 to March 2015.
 Over that time frame, a value of -0.8 implies at least a 20\% monthly decrease
 in the price of corn.
 A value of 0.8 implies an increase of at least 20\%.
-Again, given the limitations of my data source, I split the output data into two
-discrete subsets.
-The first subset covered March 1985 to December 1999 and constitutes the output
-of sub-optimal input data.
+Again, given the limitations of my input data source, I split the output
+data into two discrete subsets.
+The first subset covered March 1985 to December 1999 and constitutes the
+output of sub-optimal input data.
 This output data corresponds to the dataset used for homework 6.
-The second subset covers January $1^{st}$, 2004 to December $31^{st}$, 2014 and is
-considered the output for the optimal input data.
+The second subset covers January $1^{st}$, 2004 to December $31^{st}$, 2014
+and is considered the output for the optimal input data.
 \subsection{Neural Network Design}
 As previously indicated, I decided to pursue a Multi-Layer Perceptron (MLP) with
 one hidden layer and one output layer.
@@ -323,10 +325,10 @@ Table \ref{bp:param} highlights my parameter selection for the BP algorithm:
 \begin{table}[h]
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-Momentum & Maximum Number & Slope of & Cutoff for & Use Nguyen- \\
-Factor & of Iterations & tanh function & growth of error & Widrow weight Init \\
+Learning & Maximum Number & Slope of & Cutoff for & Use Nguyen- \\
+Rate & of Iterations & tanh function & growth of error & Widrow weight Init \\
 \hline
-0.01 & 200 & 1 & 0.001 & True (1) \\ \hline
+0.001 & 200 & 1 & 0.01 & True (1) \\ \hline
 \end{tabular}
 \caption{Backpropagation Parameters}
 \label{bp:param}
@@ -334,12 +336,142 @@ Factor & of Iterations & tanh function & growth of error & Widrow weight Init \\
 
 Due to my binning process, I did not normalize any training inputs and the
 training outputs were normalized according to section \ref{sec:outputData}.
+As with most homework assignments, I split the training data set into
+training data and verification data after having randomized the entire
+data set.
+I did modify the backpropagation implementation to randomize the input
+before each training epoch.
+In total, the input data set consists of 132 observations with 840
+variables (avg temp., avg press., precip) for ten ``weather stations''
+for 28 days.
+The first 100 samples are used for training and the final 32 are used
+for testing.
 
 \section{Results}
 \subsection{Optimal Data}
+A typical run of my algorithm yields error in the 0.04 to 0.05 range.
+See figure \ref{Fig:MSE} for a plot of a typical run.
+\begin{figure}[h]
+\makebox[\textwidth][c]{\includegraphics{MSE_plot.png}}
+\caption{MSE Plot Output}
+\label{Fig:MSE}
+\end{figure} \\
+Given my results from homework 6, I initially set the number of hidden
+neurons to 10, one for each city involved.
+This number yielded MSE values in the 0.06 to 0.08 range so I experimented
+with various values of hidden neurons ranging from three to thirty.
+To my surprise, three turned out to be the ``ideal'' number of hidden
+neurons.
+See table \ref{Tab:MSEvCnt} for a sample of the data that led to my
+conclusion.
+Greater than 5 neurons tends to overfit within the first 100 training
+epochs.
+Of course, these results, and table \ref{Tab:MSEvCnt}, are extremely
+sensitive to initial conditions and the values in the table represent
+observed minimum seen average MSE vectors over multiple runs with the
+specified neuron count.
+\begin{table}[h]
+\begin{tabular}{|c|c|}
+\hline
+Number of Hidden Neurons & Average of Resulting MSE Vector \\ \hline
+1 & 0.0387 \\ \hline
+3 & 0.0368 \\ \hline
+5 & 0.0445 \\ \hline
+10 & 0.0761 \\ \hline
+15 & 0.0416 \\ \hline
+20 & 0.0483 \\ \hline
+\end{tabular}
+\caption[Avg. MSE v. Neuron Cnt]{Average MSE Values for Various Hidden Neuron Count}
+\label{Tab:MSEvCnt}
+\end{table}
 \subsection{Sub-Optimal Data}
 
-\section{Conclusion}
+Using identical parameters for the Optimal output, I was able to achieve
+much smaller MSE values (between 0.02 and 0.03) which is consistent with
+my results from homework 6.
+See figure \ref{Fig:MSESub} for a typical plot.
+\begin{figure}[h]
+\makebox[\textwidth][c]{\includegraphics{MSE2_plot.png}}
+\caption{MSE Plot Output - Sub-Optimal Data}
+\label{Fig:MSESub}
+\end{figure} \\
+
+\section{Analysis and Closing Remarks}
+My goal for this project was to predict corn prices based on weather
+using a neural network.
+Given the historical precedent detailed in section \ref{Sec:Prec} and
+the availability of weather data from Weather Underground, I thought this
+project might actually be boring.
+I deviated from my predecessors by trying to predict monthly corn prices
+instead of annual yield and in my unique data pre-processing (``binning'').
+Having seen the typical MSE values from my NN and looking at a graph
+of actual output vs. NN output such as figure \ref{Fig:SampOut}, I believe
+that I have significantly more work to do!
+\begin{figure}[h]
+\makebox[\textwidth][c]{\includegraphics{sample_output.png}}
+\caption{NN Output vs. Actual Output}
+\label{Fig:SampOut}
+\end{figure}\\
+
+I have identified several key features as the cause of my high
+MSE:
+\begin{enumerate}
+\item Randomizing the input on a per-month basis doesn't actually make
+much sense because the weather, and particularly the effects of the weather
+on corn, are time-delayed \cite{tradecorn}. In other words, my randomization
+doesn't respect the effect of the sequence of weather.
+I did try using non-randomized input data which greatly increased my MSE.
+\item In a similar vein to item \#1, perhaps a recurrent neural network
+(RNN) would have been the better choice. I set out to use an RNN
+but after seeing how common using regular BP was I changed my mind.
+An RNN would be more line with Dr. Hu's prediction method \cite{hu}.
+\item Even in the Optimal data set, there are holes in the data and I'm
+sure given additional time to tweak my bins I could achieve a better fit.
+Given the error values in my output, further analysis of my data
+pre-processing is warranted.
+\item My area of coverage is low compared to the articles reviewed that
+achieved lower MSE values, see section \ref{Sec:Prec}.
+I expected this to be a factor; however, Weather Underground requires a
+paid account to access the volume of information I felt I would need. Such
+an account costs \$2500 per month, which I felt was excessive.
+\end{enumerate}
+
+But let's take a look at the output again.
+While the fit is obviously poor, consider what the graph tells us.
+First of all, I'm trying to match the first derivative of the price of corn.
+The price itself can fluctuate pretty wildly from month to month, see figure
+\ref{Fig:CornPric}.
+\begin{figure}
+\makebox[\textwidth][c]{\includegraphics{cprice.png}}
+\caption[Historical Corn Prices]{Historical Corn Prices\cite{outputdata}}
+\label{Fig:CornPric}
+\end{figure}
+Consider that in order to make money based on corn prices, you need to
+``buy low, sell high''.
+From figure \ref{Fig:SampOut}, it's pretty clear that the NN does capture
+most of the major price movements.
+While the output data cannot directly be used to trade, the trend of the
+output curve as additional weather data goes into the NN does provide
+information about corn price deltas \emph{relative to the starting price
+of the time series}.
+In general, my NN does capture leading indicators of an increase in the
+monthly price delta.
+That monthly price delta may remain negative; it depends on where the
+price delta information starts. \\
+
+It's a stretch, but consider trading \emph{options} (called futures in the
+world of commodities).
+Having leading indications of price movements of any kind would allow
+someone to purchase a suitable futures contract.
+Using a futures contract instead of directly purchasing the underlying
+commodity significantly reduces the risk of erroneous information
+\cite{tradecorn,options}.
+Although not covered in this project, the next steps for my endeavor are:
+\begin{enumerate}
+\item Model purchasing corn futures based on the NN developed here.
+\item Tweak binning procedure.
+\item Attempt RNN.
+\end{enumerate}
 
 \pagebreak
 \appendix
@@ -408,9 +540,9 @@ follows:
 \label{AppA:make_queries}
 \end{figure}
 
-\section{Contents of Submission}
-The following table lists all files submitted along with a brief overview
-of their contents:
+\section{Contents of Submission} \label{AppB}
+The following table lists all files (sans writeup) submitted along with a
+brief overview of their contents:
 \begin{table}[h]
 \begin{tabular}{|c|l|}
 \hline
@@ -429,7 +561,20 @@ ProjDateGen.py & Generates appropriate invocations of ClassifyDay.py
 \hfill \\
  & for all days included as input samples for this project
 \hfill \\ \hline
-ProjectInput.mat & Pre-processed weather input
+OptimalInput.mat & Pre-processed weather input for optimal time span
+\hfill \\ \hline
+OptimalOutput.mat & Pre-processed monthly corn prices for optimal time span
+\hfill \\ \hline
+SuboptimalInput.mat & Pre-processed weather input for sub-optimal time span
+\hfill \\ \hline
+SuboptimalOutput.mat & Pre-processed monthly corn prices for
+sub-optimal time span
+\hfill \\ \hline
+bp2.m & Backpropagation implementation from Homework 3
+\hfill \\ \hline
+bp2val.m & Evaluation method for NN trained by bp2.m
+\hfill \\ \hline
+Anderson\_Project.m & NN invocation file with final data transformations
 \hfill \\ \hline
 \end{tabular}
 \caption{Files and their Contents}
@@ -459,7 +604,7 @@ ProjectInput.mat & Pre-processed weather input
 
 % Brief overview of corn futures trading; why would anyone care? Basic
 % terminology, hints of the weather affecting yield.
-% ``...especially subject to yield losses from hot, dry conidtions
+% ``...especially subject to yield losses from hot, dry conditions
 % during [April-May] ...''
 % Emphasizes relation between yield and price.
 \bibitem{tradecorn}
@@ -515,7 +660,7 @@ ProjectInput.mat & Pre-processed weather input
 % Authors assume technological factors linearly increase yield
 % over time.
 % Used Min/Max temp, rainfall, morning relative humidity for 
-% input variables. Sent through a farily rigorous preprocessing system. 
+% input variables. Sent through a fairly rigorous preprocessing system. 
 % Used NN models with one and two hidden layers, convoluted with 4, 5, and
 % 6 hidden neurons per hidden layer.
 % Hyperbolic tangent used as hidden neuron activation function.
@@ -528,7 +673,7 @@ ProjectInput.mat & Pre-processed weather input
 
 % Input variables:
 % Daily mean and max temp.
-% Daily mean dewpoint
+% Daily mean dew point
 % Precipitation (assumed daily)
 % Four layer backprop network, used logistic activation function.
 % (hyperbolic tangent)
@@ -558,7 +703,7 @@ ProjectInput.mat & Pre-processed weather input
 % No direct reference to activation functions was found.
 \bibitem{tangerines}
    Boonprasom, Pichaya, and Gumpanart Bumroongitt,
-   \emph{``Prediction of Tangerine Yield Using Artifical Neural Network
+   \emph{``Prediction of Tangerine Yield Using Artificial Neural Network
    (ANN)''}.
    CMU. Journal, 2005, Vol. 4(1) pp. 39 - 48.
 
@@ -578,6 +723,14 @@ ProjectInput.mat & Pre-processed weather input
    Online Article,
    http://www.indexmundi.com/commodities/?commodity=corn\&months=360.
    Last Accessed on 5 May, 2015.
+
+% Article on trading options
+\bibitem{options}
+   Investopedia,
+   \emph{``Options Basics: Introduction''}.
+   Online Article,
+   http://www.investopedia.com/university/options/.
+   Last Accessed on 8 May, 2015.
 
 \end{thebibliography}
 
